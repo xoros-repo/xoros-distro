@@ -1,0 +1,16 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Run build.sh
+        run: |
+          build.sh
