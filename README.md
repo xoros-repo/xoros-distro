@@ -1,1 +1,1 @@
-# meta-xoros
+# Xoros Yocto Layer
