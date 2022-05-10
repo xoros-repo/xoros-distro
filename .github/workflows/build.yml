@@ -13,4 +13,4 @@ jobs:
 
       - name: Run build.sh
         run: |
-          ./build.sh
+          ${GITHUB_WORKSPACE}/build.sh
