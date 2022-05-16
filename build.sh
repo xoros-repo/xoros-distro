@@ -62,19 +62,55 @@ bitbake ${XOROS_IMAGE}
 BB_EXIT_CODE=$?
 
 if [ ${BB_EXIT_CODE} -eq 0 ]; then
-	if [ "${XOROS_BOARD}" == "qemux86-64" ]; then
-		XOROS_DEPLOY = ${XOROS_PWD}/build/tmp/deploy/images/${XOROS_BOARD}/${XOROS_IMAGE}-${XOROS_BOARD}.wic.vmdk
+	IMG_TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
+	XOROS_IMGS_PATH=${XOROS_PWD}/build/tmp/deploy/images/${XOROS_BOARD}/
+	mkdir -p /var/www/html/artifacts/${XOROS_BOARD}/
+	if [ "${XOROS_BOARD}" == "raspberrypi4" ] || [ "${XOROS_BOARD}" = "qemux86-64" ] || [ "${XOROS_BOARD}" = "genericx86-64" ] ; then
+		XOROS_DEPLOY=${XOROS_IMGS_PATH}/${XOROS_IMAGE}-${XOROS_BOARD}.ext4
+		XOROS_UPDATE=${XOROS_IMGS_PATH}/update-bundle-${XOROS_BOARD}.raucb
 		if [ -f ${XOROS_DEPLOY} ]; then
-    			cp ${XOROS_DEPLOY} /var/www/html/artifacts/$(date '+%Y%m%d-%H%M%S')-${XOROS_IMAGE}-${XOROS_BOARD}.vmdk
+    			cp -p ${XOROS_DEPLOY} /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-${XOROS_IMAGE}-${XOROS_BOARD}.ext4
 		else
-			echo "ERROR! Image file not found!"
+			echo "Image file not found!"
+		fi
+
+		if [ -f ${XOROS_UPDATE} ]; then
+    			cp -p ${XOROS_UPDATE} /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-${XOROS_IMAGE}-${XOROS_BOARD}.raucb
+		else
+			echo "Update file not found!"
 		fi
 	else
-		if [ -f ${XOROS_PWD}/build/tmp/deploy/images/${XOROS_BOARD}/${XOROS_IMAGE}-${XOROS_BOARD}.wic.gz ]; then
-			gzip -dc ${XOROS_PWD}/build/tmp/deploy/images/${XOROS_BOARD}/${XOROS_IMAGE}-${XOROS_BOARD}.wic.gz > /var/www/html/artifacts/$(date '+%Y%m%d-%H%M%S')-${XOROS_IMAGE}-${XOROS_BOARD}.img
-		else
-			echo "ERROR! Compressed image file not found!"
+		for f in ${XOROS_IMGS_PATH}*.dtb; do
+			if [[ -L $f ]] && [[ $f != *var-som-mx6.dtb ]]; then
+				cp $f /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-${f##*/}
+			else
+				echo "Cannot copy dtb file ${f##*/}!"
+			fi
+		done
+
+		if [ -f ${XOROS_IMGS_PATH}/SPL-nand ]; then
+			cp ${XOROS_IMGS_PATH}/SPL-nand /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-SPL-nand
 		fi
+
+		if [ -f ${XOROS_IMGS_PATH}/u-boot.img-nand ]; then
+			cp ${XOROS_IMGS_PATH}/u-boot.img-nand /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-u-boot.img-nand
+		else
+			echo "U-boot file not found!"
+		fi
+
+		if [ -f ${XOROS_IMGS_PATH}/${XOROS_IMAGE}-${XOROS_BOARD}_256kbpeb.ubifs ]; then
+			cp ${XOROS_IMGS_PATH}/${XOROS_IMAGE}-${XOROS_BOARD}_256kbpeb.ubifs  /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-${XOROS_IMAGE}-${XOROS_BOARD}.ubifs
+		else
+			echo "Root File System file not found!"
+		fi
+
+		XOROS_UPDATE=${XOROS_IMGS_PATH}/update-bundle-${XOROS_BOARD}.raucb
+		if [ -f ${XOROS_UPDATE} ]; then
+    			cp ${XOROS_UPDATE} /var/www/html/artifacts/${XOROS_BOARD}/${IMG_TIMESTAMP}-${XOROS_IMAGE}-${XOROS_BOARD}.raucb
+		else
+			echo "Update file not found!"
+		fi
+
 	fi
 else
 	echo "Bitbake returned exit code ${BB_EXIT_CODE}. Aborting..."
