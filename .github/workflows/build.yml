@@ -13,5 +13,6 @@ jobs:
 
       - name: Run build.sh
         run: |
-          ${GITHUB_WORKSPACE}/sources/fetch_sources.sh
-          ${GITHUB_WORKSPACE}/build.sh
+          printenv
+          ./sources/fetch_sources.sh
+          ./build.sh
