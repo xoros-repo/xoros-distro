@@ -14,5 +14,6 @@ jobs:
       - name: Run build.sh
         run: |
           printenv
+          ls -al ${RUNNER_WORKSPACE}
           ./sources/fetch_sources.sh
           ./build.sh
