@@ -50,8 +50,12 @@ XOROS_IMAGETYPE=wic.gz
 
 . sources/poky/oe-init-build-env
 
+echo BBPATH=${BBPATH}
+
 cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/bblayers.conf > ${BBPATH}/conf/bblayers.conf
 cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/local.conf ${XOROS_META_DIR}/conf/local.conf > ${BBPATH}/conf/local.conf
+
+cd "${BBPATH}" || exit 1
 
 bitbake-layers show-layers
 bitbake ${XOROS_IMAGE}
