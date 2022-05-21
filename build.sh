@@ -41,23 +41,19 @@ echo "Starting build"
 
 XOROS_IMAGE=xoros
 
-#XOROS_BOARD=var-som-mx6
-#XOROS_BOARD=raspberrypi4
-#XOROS_BOARD_SET=qemux86-64 raspberrypi4
-
 XOROS_YOCTO=dunfell
 export XOROS_YOCTO
 
-XOROS_PWD=$PWD
+XOROS_PWD=$(pwd)
+XOROS_META_DIR=${XOROS_PWD}/sources/meta-xoros
 XOROS_IMAGETYPE=wic.gz
 
-source ${XOROS_PWD}/sources/poky/oe-init-build-env build
+./sources/poky/oe-init-build-env build
 
-cat ${XOROS_PWD}/sources/meta-xoros/conf/${XOROS_BOARD}/bblayers.conf > conf/bblayers.conf
-cat ${XOROS_PWD}/sources/meta-xoros/conf/${XOROS_BOARD}/local.conf <(echo) ${XOROS_PWD}/sources/meta-xoros/conf/local.conf > conf/local.conf
+cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/bblayers.conf > conf/bblayers.conf
+cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/local.conf ${XOROS_META_DIR}/conf/local.conf > conf/local.conf
 
 bitbake-layers show-layers
-#bitbake -c cleanall ${XOROS_IMAGE}
 bitbake ${XOROS_IMAGE}
 
 BB_EXIT_CODE=$?

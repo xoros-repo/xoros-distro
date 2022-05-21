@@ -3,6 +3,7 @@
 ### Set default branch name if XOROS_YOCTO is undefined
 DEFAULT_BRANCH=${XOROS_YOCTO:-dunfell}
 
+git clone git://git.yoctoproject.org/poky --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/openembedded/meta-openembedded.git --branch="${DEFAULT_BRANCH}" --depth=1
 git clone git://git.openembedded.org/openembedded-core --branch="${DEFAULT_BRANCH}" --depth=1
 git clone git://git.openembedded.org/meta-python2 --branch="${DEFAULT_BRANCH}" --depth=1
