@@ -11,6 +11,10 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - name: Run build.sh
+      - name: Prepare for build
         run: |
-          ${GITHUB_WORKSPACE}/build.sh
+          cd sources && fetch_sources.sh
+
+      - name: Run build
+        run: |
+          build.sh
