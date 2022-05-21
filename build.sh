@@ -1,31 +1,28 @@
 #!/bin/sh
 
-if [ "$#" -ne 1 ]; then
-	echo "Run script with target device from below options:"
-	echo ""
-	echo "sh build.sh var-som-mx6"
-	echo "OR"
-	echo "sh build.sh raspberrypi4"
-	echo "OR"
-	echo "sh build.sh qemux86-64"
-	echo "OR"
-	echo "sh build.sh genericx86-64"
-	exit 1
-fi
+### Default board is qemux86-64
+XOROS_BOARD=${1:-qemux86-64}
 
-XOROS_BOARD=$1
+__usage="
+Usage: $(basename $0) [OPTIONS]
+
+Options:
+  var-som-mx6
+  raspberrypi4
+  qemux86-64
+  genericx86-64
+"
 
 if  [ "${XOROS_BOARD}" = "var-som-mx6" ] || \
-    [ "${XOROS_BOARD}" = "raspberrypi4" ] || [ "${XOROS_BOARD}" = "qemux86-64" ] || [ "${XOROS_BOARD}" = "genericx86-64" ]; then
-	echo "Building XOROS for target:i $1"
+    [ "${XOROS_BOARD}" = "raspberrypi4" ] || \
+    [ "${XOROS_BOARD}" = "qemux86-64" ] || \
+    [ "${XOROS_BOARD}" = "genericx86-64" ]
+then
+	echo "Building XOROS for target: ${XOROS_BOARD}"
 else
 	echo "Invalid target selected!"
-	echo "Select target from below options:"
-	echo "1. var-som-mx6"
-	echo "2. raspberrypi4"
-	echo "3. qemux86-64"
-	echo "4. genericx86-64"
-	exit 1
+  echo __usage
+  exit 1
 fi
 
 echo "---- System information ----------------"
@@ -50,9 +47,6 @@ XOROS_IMAGE=xoros
 
 XOROS_YOCTO=dunfell
 export XOROS_YOCTO
-
-echo $(basename $0)
-exit
 
 XOROS_PWD=$PWD
 XOROS_IMAGETYPE=wic.gz
