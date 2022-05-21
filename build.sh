@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ### Default board is qemux86-64
 XOROS_BOARD=${1:-qemux86-64}
@@ -25,18 +25,6 @@ else
   exit 1
 fi
 
-echo "---- System information ----------------"
-echo "--- Storage ----------------------------"
-df -h
-
-echo "--- Memory -----------------------------"
-free
-
-echo "--- Processor --------------------------"
-lscpu
-
-echo "----------------------------------------"
-
 echo "Starting build"
 
 XOROS_IMAGE=xoros
@@ -48,7 +36,10 @@ XOROS_PWD=$(pwd)
 XOROS_META_DIR=${XOROS_PWD}/sources/meta-xoros
 XOROS_IMAGETYPE=wic.gz
 
-. sources/poky/oe-init-build-env
+#cd ${XOROS_PWD}/sources/poky
+#. oe-init-build-env
+
+source sources/poky/oe-init-build-env
 
 echo BBPATH=${BBPATH}
 
