@@ -13,7 +13,10 @@ if [ "$#" -ne 1 ]; then
 	exit 1
 fi
 
-if [ "$1" = "var-som-mx6" ] || [ "$1" = "raspberrypi4" ] || [ "$1" = "qemux86-64" ] || [ "$1" = "genericx86-64" ]; then
+XOROS_BOARD=$1
+
+if  [ "${XOROS_BOARD}" = "var-som-mx6" ] || \
+    [ "${XOROS_BOARD}" = "raspberrypi4" ] || [ "${XOROS_BOARD}" = "qemux86-64" ] || [ "${XOROS_BOARD}" = "genericx86-64" ]; then
 	echo "Building XOROS for target:i $1"
 else
 	echo "Invalid target selected!"
@@ -40,12 +43,16 @@ echo "----------------------------------------"
 echo "Starting build"
 
 XOROS_IMAGE=xoros
-XOROS_BOARD=$1
+
 #XOROS_BOARD=var-som-mx6
 #XOROS_BOARD=raspberrypi4
 #XOROS_BOARD_SET=qemux86-64 raspberrypi4
 
 XOROS_YOCTO=dunfell
+export XOROS_YOCTO
+
+echo $(basename $0)
+exit
 
 XOROS_PWD=$PWD
 XOROS_IMAGETYPE=wic.gz
@@ -65,7 +72,7 @@ if [ ${BB_EXIT_CODE} -eq 0 ]; then
 	IMG_TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
 	XOROS_IMGS_PATH=${XOROS_PWD}/build/tmp/deploy/images/${XOROS_BOARD}/
 	mkdir -p /var/www/html/artifacts/${XOROS_BOARD}/
-	if [ "${XOROS_BOARD}" == "raspberrypi4" ] || [ "${XOROS_BOARD}" = "qemux86-64" ] || [ "${XOROS_BOARD}" = "genericx86-64" ] ; then
+	if [ "${XOROS_BOARD}" = "raspberrypi4" ] || [ "${XOROS_BOARD}" = "qemux86-64" ] || [ "${XOROS_BOARD}" = "genericx86-64" ] ; then
 		XOROS_DEPLOY=${XOROS_IMGS_PATH}/${XOROS_IMAGE}-${XOROS_BOARD}.ext4
 		XOROS_UPDATE=${XOROS_IMGS_PATH}/update-bundle-${XOROS_BOARD}.raucb
 		if [ -f ${XOROS_DEPLOY} ]; then
@@ -117,4 +124,4 @@ else
 	exit $BB_EXIT_CODE
 fi
 
-cd ${XOROS_PWD}
+cd "${XOROS_PWD}" || exit
