@@ -13,8 +13,9 @@ jobs:
 
       - name: Prepare for build
         run: |
-          cd ${GITHUB_WORKSPACE}/sources && ./fetch_sources.sh
+          cd ${GITHUB_WORKSPACE}/sources
+          fetch_sources.sh
 
       - name: Run build
         run: |
-          ./build.sh
+          build.sh
