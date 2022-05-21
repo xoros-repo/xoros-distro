@@ -48,10 +48,10 @@ XOROS_PWD=$(pwd)
 XOROS_META_DIR=${XOROS_PWD}/sources/meta-xoros
 XOROS_IMAGETYPE=wic.gz
 
-./sources/poky/oe-init-build-env build
+. sources/poky/oe-init-build-env
 
-cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/bblayers.conf > conf/bblayers.conf
-cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/local.conf ${XOROS_META_DIR}/conf/local.conf > conf/local.conf
+cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/bblayers.conf > ${BBPATH}/conf/bblayers.conf
+cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/local.conf ${XOROS_META_DIR}/conf/local.conf > ${BBPATH}/conf/local.conf
 
 bitbake-layers show-layers
 bitbake ${XOROS_IMAGE}
