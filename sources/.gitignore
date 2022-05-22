@@ -1,6 +1,6 @@
-### Exclude xoros related files and dirs
+### Ignore everything
+*
+
+### Except xoros related files and dirs
 !meta-xoros/**
 !fetch_sources.sh
-
-### Ignore everything else
-*
