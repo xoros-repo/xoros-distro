@@ -16,3 +16,4 @@ git clone https://github.com/Freescale/meta-freescale-3rdparty.git --branch="${D
 git clone https://github.com/Freescale/meta-freescale-distro.git --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/varigit/meta-variscite-fslc.git --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/OSSystems/meta-browser.git --branch="master" --depth=1
+git clone git://git.yoctoproject.org/meta-virtualization --branch="${DEFAULT_BRANCH}" --depth=1
