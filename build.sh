@@ -27,7 +27,8 @@ fi
 
 echo "Starting build"
 
-XOROS_IMAGE=xoros
+export DISTRO=xoros
+XOROS_IMAGE=${DISTRO}-image
 
 XOROS_YOCTO=dunfell
 export XOROS_YOCTO
