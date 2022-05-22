@@ -52,9 +52,17 @@ Following targets are acceptable:
 
 The build will start automatically.
 
+### Caching
+
+The builder script will use the value of BUILDER_CACHE_DIR environment variable to set SSTATE cache.
+For more info see:
+https://wiki.yoctoproject.org/wiki/Enable_sstate_cache
+
 ### GitHub actions (preferred)
 
 Entire build process is done in docker image [xoros-builder](https://github.com/xoros-repo/xoros-builder) (https://github.com/xoros-repo/xoros-builder).
 
 ### Build using local docker
+
+### Caching
 
