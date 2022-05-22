@@ -8,7 +8,6 @@ git clone https://github.com/openembedded/meta-openembedded.git --branch="${DEFA
 git clone git://git.openembedded.org/openembedded-core --branch="${DEFAULT_BRANCH}" --depth=1
 git clone git://git.openembedded.org/meta-python2 --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/kraj/meta-clang.git --branch="${DEFAULT_BRANCH}-clang12" --depth=1
-git clone https://github.com/OSSystems/meta-browser.git --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/rauc/meta-rauc.git --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/rauc/meta-rauc-community.git --branch="${DEFAULT_BRANCH}" --depth=1
 git clone git://git.yoctoproject.org/meta-raspberrypi --branch="${DEFAULT_BRANCH}" --depth=1
