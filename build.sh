@@ -37,7 +37,10 @@ XOROS_META_DIR=${XOROS_PWD}/sources/meta-xoros
 XOROS_IMAGETYPE=wic.gz
 
 if [ -z ${BUILDER_CACHE_DIR+x} ]; then
+  echo "BUILDER_CACHE_DIR is not set"
+else
   cd "${BUILDER_CACHE_DIR}" || exit
+  echo "Using BUILDER_CACHE_DIR ${BUILDER_CACHE_DIR}..."
 fi
 
 source "${XOROS_PWD}"/sources/poky/oe-init-build-env
