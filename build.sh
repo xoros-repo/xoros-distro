@@ -21,7 +21,7 @@ then
 	echo "Building XOROS for target: ${XOROS_BOARD}"
 else
 	echo "Invalid target selected!"
-  echo __usage
+  echo "$__usage"
   exit 1
 fi
 
