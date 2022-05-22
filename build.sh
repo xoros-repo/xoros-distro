@@ -36,15 +36,16 @@ XOROS_PWD=$(pwd)
 XOROS_META_DIR=${XOROS_PWD}/sources/meta-xoros
 XOROS_IMAGETYPE=wic.gz
 
-#cd ${XOROS_PWD}/sources/poky
-#. oe-init-build-env
+if [ -z ${BUILDER_CACHE_DIR+x} ]; then
+  cd "${BUILDER_CACHE_DIR}" || exit
+fi
 
-source sources/poky/oe-init-build-env
+source "${XOROS_PWD}"/sources/poky/oe-init-build-env
 
-echo BBPATH=${BBPATH}
+echo "BBPATH=${BBPATH}"
 
-cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/bblayers.conf > ${BBPATH}/conf/bblayers.conf
-cat ${XOROS_META_DIR}/conf/${XOROS_BOARD}/local.conf ${XOROS_META_DIR}/conf/local.conf > ${BBPATH}/conf/local.conf
+cat "${XOROS_META_DIR}"/conf/"${XOROS_BOARD}"/bblayers.conf > "${BBPATH}"/conf/bblayers.conf
+cat "${XOROS_META_DIR}"/conf/"${XOROS_BOARD}"/local.conf "${XOROS_META_DIR}"/conf/local.conf > "${BBPATH}"/conf/local.conf
 
 cd "${BBPATH}" || exit 1
 
