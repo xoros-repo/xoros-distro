@@ -47,8 +47,13 @@ cat "${XOROS_META_DIR}"/conf/"${XOROS_BOARD}"/local.conf "${XOROS_META_DIR}"/con
 if [ -z ${BUILDER_CACHE_DIR+x} ]; then
   echo "BUILDER_CACHE_DIR is not set"
 else
-  echo "Using BUILDER_CACHE_DIR ${BUILDER_CACHE_DIR}..."
-  echo "SSTATE_DIR ?= \"${BUILDER_CACHE_DIR}\"" >> "${BBPATH}"/conf/local.conf
+  BB_SSTATE_DIR=${BUILDER_CACHE_DIR}/sstate
+  echo "Using SSTATE cache directory ${BB_SSTATE_DIR}..."
+  mkdir -p "${BB_SSTATE_DIR}"
+  echo "SSTATE_DIR ?= \"${BB_SSTATE_DIR}\"" >> "${BBPATH}"/conf/local.conf
+  BB_DL_DIR=${BUILDER_CACHE_DIR}/download
+  mkdir -p "${BB_DL_DIR}"
+  echo "DL_DIR ?= \"${BB_DL_DIR}\"" >> "${BBPATH}"/conf/local.conf
 fi
 
 cd "${BBPATH}" || exit 1
