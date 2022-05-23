@@ -30,7 +30,7 @@ echo "Starting build"
 export DISTRO=xoros
 XOROS_IMAGE=${DISTRO}-image
 
-XOROS_YOCTO=dunfell
+XOROS_YOCTO=kirkstone
 export XOROS_YOCTO
 
 XOROS_PWD=$(pwd)
@@ -59,6 +59,7 @@ fi
 
 cd "${BBPATH}" || exit 1
 
+export MACHINE=${XOROS_BOARD}
 bitbake-layers show-layers
 bitbake ${XOROS_IMAGE}
 
