@@ -3,7 +3,7 @@ SRC_URI += "file://rauc.cfg"
 SRC_URI += "file://logo_linux_clut224.ppm"
 CMDLINE:remove = "root=/dev/mmcblk0p2"
 
-do_configure_prepend() {
+do_configure:prepend() {
     # logo support, if you supply logo_linux_clut224.ppm in SRC_URI, then it's going to be used
     if [ -e ${WORKDIR}/logo_linux_clut224.ppm ]; then
         install -m 0644 ${WORKDIR}/logo_linux_clut224.ppm ${S}/drivers/video/logo/logo_linux_clut224.ppm
