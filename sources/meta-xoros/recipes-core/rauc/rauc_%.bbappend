@@ -14,7 +14,7 @@ PACKAGES += "rauc-grow-data-part"
 
 RDEPENDS_${PN}-grow-data-part += "parted"
 
-do_install_append() {
+do_install:append() {
 	install -d ${D}${systemd_unitdir}/system/
 	install -m 0644 ${WORKDIR}/rauc-grow-data-partition.service ${D}${systemd_unitdir}/system/
 }

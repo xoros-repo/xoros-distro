@@ -15,7 +15,7 @@ SPLASH_IMAGES = "file://psplash-xoros.png;outsuffix=default"
 # The core psplash recipe is only designed to deal with modifications to the
 # 'logo' image; we need to change the bar image too, since we are changing
 # colors
-do_configure_append () {
+do_configure:append () {
 	cd ${S}
 	cat ../psplash-colors.h > ./psplash-colors.h
 	# strip the -img suffix from the bar png -- we could just store the
