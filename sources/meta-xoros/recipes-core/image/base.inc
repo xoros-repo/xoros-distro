@@ -13,9 +13,6 @@ XOROS_FEATURES = "\
     chromium-x11 \
 "
 
-DISTRO_FEATURES += "bluetooth wifi ffmpeg eglfs ipv6 directfb opengl"
-DISTRO_FEATURES:remove = "wayland vulkan"
-
 IMAGE_INSTALL += " \
     ${XOROS_FEATURES} \
 "
