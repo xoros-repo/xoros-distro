@@ -5,12 +5,12 @@ LICENSE = "CLOSED"
 
 CORE_IMAGE_EXTRA_INSTALL += " openssh"
 
-XOROS_FEATURES = " \
+XOROS_FEATURES = "\
     bridge-utils \
     hostapd \
     wpa-supplicant \
     rauc \
-    chromium-x11
+    chromium-x11 \
 "
 
 DISTRO_FEATURES += "bluetooth wifi ffmpeg eglfs ipv6 directfb"
