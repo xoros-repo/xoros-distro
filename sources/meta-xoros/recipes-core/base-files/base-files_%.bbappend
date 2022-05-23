@@ -1,1 +1,1 @@
-FILESEXTRAPATHS =+ "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"

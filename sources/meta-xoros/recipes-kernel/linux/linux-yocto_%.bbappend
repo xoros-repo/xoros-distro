@@ -1,4 +1,4 @@
-FILESEXTRAPATHS =+ "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += "file://rauc.cfg"
 SRC_URI += "file://logo_linux_clut224.ppm"
 CMDLINE:remove = "root=/dev/mmcblk0p2"
