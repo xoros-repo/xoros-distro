@@ -12,8 +12,7 @@ git clone https://github.com/rauc/meta-rauc.git --branch="${DEFAULT_BRANCH}" --d
 git clone git://git.yoctoproject.org/meta-raspberrypi --branch="${DEFAULT_BRANCH}" --depth=1
 git clone git://git.yoctoproject.org/meta-freescale --branch="${DEFAULT_BRANCH}" --depth=1
 git clone https://github.com/Freescale/meta-freescale-3rdparty.git --branch="${DEFAULT_BRANCH}" --depth=1
-git clone https://github.com/Freescale/meta-freescale-distro.git --branch="${DEFAULT_BRANCH}" --depth=1
-git clone https://github.com/varigit/meta-variscite-fslc.git --branch="${DEFAULT_BRANCH}" --depth=1
+git clone https://github.com/varigit/meta-variscite-fslc.git --branch="hardknott" --depth=1
 git clone https://github.com/OSSystems/meta-browser.git --branch="master" --depth=1
 
 ### I dont' think we need it
