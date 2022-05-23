@@ -1,6 +1,6 @@
 require base.inc
 
-DISTRO_VERSION_append = "-debug"
+DISTRO_VERSION .= "-debug"
 
 CORE_IMAGE_EXTRA_INSTALL += "openssh-sftp-server rsync"
 

@@ -1,5 +1,4 @@
-
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS =+ "${THISDIR}/files:"
 
 SRC_URI += "file://xoros.bmp"
 

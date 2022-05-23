@@ -1,7 +1,7 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS =+ "${THISDIR}/files:"
 SRC_URI += "file://rauc.cfg"
-SRC_URI_append = " file://logo_linux_clut224.ppm"
-CMDLINE_remove = "root=/dev/mmcblk0p2"
+SRC_URI += "file://logo_linux_clut224.ppm"
+CMDLINE:remove = "root=/dev/mmcblk0p2"
 
 do_configure_prepend() {
     # logo support, if you supply logo_linux_clut224.ppm in SRC_URI, then it's going to be used

@@ -1,6 +1,6 @@
 require base.inc
 
-DISTRO_VERSION_append = "-devel"
+DISTRO_VERSION .= "-devel"
 
 EXTRA_IMAGE_FEATURES += "debug-tweaks tools-sdk"
 

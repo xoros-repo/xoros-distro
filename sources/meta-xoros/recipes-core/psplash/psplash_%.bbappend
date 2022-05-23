@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS =+ "${THISDIR}/files:"
 
 DEPENDS += "gdk-pixbuf-native"
 
