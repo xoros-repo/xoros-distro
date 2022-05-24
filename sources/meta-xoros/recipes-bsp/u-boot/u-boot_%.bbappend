@@ -1,8 +1,7 @@
-
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://xoros.bmp"
 
-do_unpack_append() {
+do_unpack:append() {
     os.system("cp ${PWD}/xoros.bmp ${PWD}/git/tools/logos/")
 }

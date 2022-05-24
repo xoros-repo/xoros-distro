@@ -7,14 +7,15 @@ jobs:
   build:
     name: Checkout and build
     runs-on: self-hosted
+    timeout-minutes: 180
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
 
       - name: Prepare for build
         run: |
-          cd sources && fetch_sources.sh
+          cd sources && ./fetch_sources.sh
 
       - name: Run build
         run: |
-          build.sh
+          ./build.sh
