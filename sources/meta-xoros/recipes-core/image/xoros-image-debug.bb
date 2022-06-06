@@ -1,6 +1,6 @@
-require base.inc
+require xoros-image.bb
 
-DISTRO_VERSION .= "-debug"
+IMAGE_VERSION_SUFFIX = "-debug"
 
 CORE_IMAGE_EXTRA_INSTALL += "openssh-sftp-server rsync"
 

@@ -66,3 +66,11 @@ Entire build process is done in docker image [xoros-builder](https://github.com/
 
 ### Caching
 
+## QEMU Host
+
+OVMF is required for UEFI emulation
+
+```shell
+sudo apt-get install qemu-kvm ovmf
+```
+

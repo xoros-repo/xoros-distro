@@ -28,7 +28,7 @@ fi
 echo "Starting build"
 
 export DISTRO=xoros
-XOROS_IMAGE=${DISTRO}-image
+XOROS_IMAGE=${DISTRO}-image-devel
 
 XOROS_YOCTO=kirkstone
 export XOROS_YOCTO
@@ -37,12 +37,11 @@ XOROS_PWD=$(pwd)
 XOROS_META_DIR=${XOROS_PWD}/sources/meta-xoros
 XOROS_IMAGETYPE=wic.gz
 
+export TEMPLATECONF=${XOROS_META_DIR}/conf/samples
+
 source "${XOROS_PWD}"/sources/poky/oe-init-build-env
 
 echo "BBPATH=${BBPATH}"
-
-cat "${XOROS_META_DIR}"/conf/"${XOROS_BOARD}"/bblayers.conf > "${BBPATH}"/conf/bblayers.conf
-cat "${XOROS_META_DIR}"/conf/"${XOROS_BOARD}"/local.conf "${XOROS_META_DIR}"/conf/local.conf > "${BBPATH}"/conf/local.conf
 
 ### Caching. See README.md#caching
 if [ -z ${BUILDER_CACHE_DIR+x} ]; then
@@ -60,9 +59,11 @@ fi
 cd "${BBPATH}" || exit 1
 
 export MACHINE=${XOROS_BOARD}
+
+set -e
 bitbake-layers show-layers
 bitbake ${XOROS_IMAGE} ${BITBAKE_OPTS}
 
 BB_EXIT_CODE=$?
 
-cd "${XOROS_PWD}" || exit
+cd "${XOROS_PWD}"; exit $BB_EXIT_CODE

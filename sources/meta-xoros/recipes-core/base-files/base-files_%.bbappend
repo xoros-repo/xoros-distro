@@ -1,1 +1,1 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+hostname = "${DISTRO}-${MACHINE}"

@@ -1,0 +1,21 @@
+# https://docs.yoctoproject.org/ref-manual/kickstart.html
+
+bootloader --ptable gpt --timeout=5 --append="rw oprofile.timer=1 rootfstype=squashfs" --configfile="bootloader.cfg"
+
+# sda1 = boot partition:
+part /boot --source bootimg-biosplusefi --sourceparams="loader=grub-efi,label=boot" --ondisk sda --label boot --active --fixed-size 64M
+
+# sda2 = primary rootfs partition
+part / --source rootfs --use-uuid --fstype squashfs --part-name rootfs_a --fixed-size 1G
+
+# sda3 = secondary roots partition:
+part --source rootfs --use-uuid --fstype squashfs --part-name rootfs_b --fixed-size 1G
+
+# sda4 = reserved for recovery partition:
+part --use-uuid --fstype ext4 --part-name reserve-recovery --fixed-size 704M
+
+# sda5 = overlay partition (it will be mounted by overlay.inc):
+part --use-uuid --fstype ext4 --part-name non-volatile --label non-volatile --fsoptions="defaults" --fixed-size 256M
+
+# sda6 = persistent app partition
+part --use-uuid --fstype ext4 --part-name application --fixed-size 5G
