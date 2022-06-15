@@ -62,6 +62,7 @@ export MACHINE=${XOROS_BOARD}
 
 set -e
 bitbake-layers show-layers
+
 bitbake ${XOROS_IMAGE} ${BITBAKE_OPTS}
 
 BB_EXIT_CODE=$?

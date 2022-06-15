@@ -1,6 +1,6 @@
 # https://docs.yoctoproject.org/ref-manual/kickstart.html
 
-bootloader --ptable gpt --timeout=5 --append="rw oprofile.timer=1 rootfstype=squashfs" --configfile="bootloader.cfg"
+bootloader --ptable gpt --timeout=5 --append="rw oprofile.timer=1 rootfstype=squashfs"
 
 # sda1 = boot partition:
 part /boot --source bootimg-biosplusefi --sourceparams="loader=grub-efi,label=boot" --ondisk sda --label boot --active --fixed-size 64M

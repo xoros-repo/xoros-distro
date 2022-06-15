@@ -13,6 +13,7 @@ ROOT_HOME = "/root"
 DEPENDS += "cross-localedef-native"
 
 require overlay.inc
+require bootloader.inc
 
 ### https://docs.yoctoproject.org/ref-manual/features.html#ref-features-image
 IMAGE_FEATURES += "hwcodecs"
@@ -21,7 +22,7 @@ IMAGE_FEATURES += "hwcodecs"
 IMAGE_INSTALL += "bridge-utils hostapd wpa-supplicant"
 
 ### Build wic.vmdk for QEMU
-IMAGE_FSTYPES:qemuall += "wic.vmdk"
+IMAGE_FSTYPES:qemuall += "wic.vmdk wic.u-boot"
 
 ### https://docs.yoctoproject.org/ref-manual/variables.html?highlight=image_fstypes#term-IMAGE_TYPES
 IMAGE_FSTYPES += "squashfs"
@@ -29,7 +30,7 @@ IMAGE_FSTYPES += "squashfs"
 ### Setup RAUC:
 IMAGE_INSTALL += "rauc rauc-hawkbit-updater"
 
-#do_image_wic[depends]_remove = "syslinux:do_populate_sysroot"
-
 ### Use custom WKS file:
 WKS_FILE = "${MACHINE}.wks"
+
+
