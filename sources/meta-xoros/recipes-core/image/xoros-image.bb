@@ -32,5 +32,3 @@ IMAGE_INSTALL += "rauc rauc-hawkbit-updater"
 
 ### Use EUFI WKS file:
 WKS_FILE = "${MACHINE}-efi.wks"
-
-

@@ -5,7 +5,15 @@
 [ -f .env ] && export $(grep -v '#' .env | sed 's/\r$//' | xargs)
 
 vm=xoros
-command=${1:-"cd ${REMOTE_DIR} && ./build.sh"}
+build_command="\
+  mkdir -p ${REMOTE_DIR}/source \
+  && cd ${REMOTE_DIR}/source \
+  && export BASE_WORKDIR=${REMOTE_DIR}/build \
+  && export BUILDER_CACHE_DIR=${REMOTE_DIR}/cache \
+  && ./build.sh
+"
+
+command=${1:-$build_command}
 
 ssh ${REMOTE_USER}@${REMOTE_HOST} "\
   export LIBVIRT_DEFAULT_URI='qemu:///system'; \
@@ -16,7 +24,7 @@ ssh ${REMOTE_USER}@${REMOTE_HOST} "\
 
 rsync -azh --stats --delete --exclude=".gitignore" --exclude-from=".gitignore" \
   . \
-  ${REMOTE_USER}@${REMOTE_HOST}:"${REMOTE_DIR}"
+  ${REMOTE_USER}@${REMOTE_HOST}:"${REMOTE_DIR}/source"
 
 # for UEFI add:
 #     --boot uefi,bootmenu.enable=yes,loader.secure=no,loader=\$UEFI_LOADER,nvram.template=\$NVRAM_TEMPLATE \
