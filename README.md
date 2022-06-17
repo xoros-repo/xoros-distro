@@ -68,9 +68,30 @@ Entire build process is done in docker image [xoros-builder](https://github.com/
 
 ## QEMU Host
 
+### UEFI
+
 OVMF is required for UEFI emulation
 
 ```shell
 sudo apt-get install qemu-kvm ovmf
 ```
 
+virt-install parameters to launch EUFI-based image:
+
+```shell
+# --boot uefi,loader.secure=no,loader=${UEFI_LOADER},nvram.template=${NVRAM_TEMPLATE} \
+export EUFI_LOADER=/usr/share/OVMF/OVMF_CODE_4M.fd
+export NVRAM_TEMPLATE=/usr/share/OVMF/OVMF_VARS_4M.fd
+virt-install \
+    --boot uefi,loader.secure=no,loader=${UEFI_LOADER},nvram.template=${NVRAM_TEMPLATE} \
+    --disk <.vmdk file> \
+    --memory 512 \
+    --network default \
+    --name qemu-xoros \
+    --graphics vnc,port=5900 \
+    --vcpus 4 \
+    --machine q35 \
+    --import
+```
+
+### BIOS

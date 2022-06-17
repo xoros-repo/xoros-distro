@@ -63,6 +63,8 @@ export MACHINE=${XOROS_BOARD}
 set -e
 bitbake-layers show-layers
 
+# TODO: make
+#bitbake -c clean grub
 bitbake ${XOROS_IMAGE} ${BITBAKE_OPTS}
 
 BB_EXIT_CODE=$?

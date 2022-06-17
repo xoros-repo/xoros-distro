@@ -18,25 +18,32 @@ rsync -azh --stats --delete --exclude=".gitignore" --exclude-from=".gitignore" \
   . \
   ${REMOTE_USER}@${REMOTE_HOST}:"${REMOTE_DIR}"
 
-# for UEFI add:   --boot machine=q35,firmware=efi \
-qemu_command="echo 'Starting QEMU...' \
+# for UEFI add:
+#     --boot uefi,bootmenu.enable=yes,loader.secure=no,loader=\$UEFI_LOADER,nvram.template=\$NVRAM_TEMPLATE \
+qemu_command="echo 'Starting QEMU with UEFI...' \
   && export LIBVIRT_DEFAULT_URI='qemu:///system' \
-  && export DISK_FILE='\$(readlink -f ${REMOTE_DIR}/build/tmp/deploy/images/qemux86-64/xoros-image-devel-qemux86-64.wic.vmdk)' \
+  && export UEFI_LOADER=/usr/share/OVMF/OVMF_CODE_4M.fd \
+  && export NVRAM_TEMPLATE=/usr/share/OVMF/OVMF_VARS_4M.fd \
+  && export DISK_FILE=\$(readlink -f ${REMOTE_DIR}/build/tmp/deploy/images/qemux86-64/xoros-image-devel-qemux86-64.wic.vmdk) \
   && virt-install \
     --import \
     --name $vm \
     --graphics vnc,port=5900 \
     --vcpus 4 \
+    --machine q35 \
+    --boot uefi,bootmenu.enable=yes,loader.secure=no,loader=\$UEFI_LOADER,nvram.template=\$NVRAM_TEMPLATE \
     --memory 512 \
     --network default \
     --os-type=linux \
     --os-variant=generic \
     --force \
     --noautoconsole \
-    --disk $DISK_FILE"
+    --disk \$DISK_FILE"
+
+ssh ${REMOTE_USER}@${REMOTE_HOST} "$command"
 
 echo "$qemu_command"
 
-ssh ${REMOTE_USER}@${REMOTE_HOST} "$command && $qemu_command"
+ssh ${REMOTE_USER}@${REMOTE_HOST} "$qemu_command"
 
 virt-manager -c qemu+ssh://${REMOTE_USER}@${REMOTE_HOST}/system --show-domain-console $vm

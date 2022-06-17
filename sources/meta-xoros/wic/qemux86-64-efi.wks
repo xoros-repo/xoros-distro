@@ -1,3 +1,21 @@
-bootloader --ptable gpt
-part /boot --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/boot --fstype=vfat --label boot --active --align 1024 --use-uuid --overhead-factor 1.0
-part / --source rootfs --fstype=ext4 --label root --align 1024 --exclude-path boot/
+# https://docs.yoctoproject.org/ref-manual/kickstart.html
+
+bootloader --ptable gpt --timeout=5 --append="rw oprofile.timer=1 rootfstype=squashfs"
+
+# sda1 = boot partition:
+part /boot --source bootimg-efi --ondisk sda --rootfs-dir=${IMAGE_ROOTFS}/boot --sourceparams="loader=grub-efi" --active --fixed-size 64M
+
+# sda2 = primary rootfs partition
+part / --source rootfs --use-uuid --fstype squashfs --part-name rootfs_a --fixed-size 1G
+
+# sda3 = secondary roots partition:
+part --source rootfs --use-uuid --fstype squashfs --part-name rootfs_b --fixed-size 1G
+
+# sda4 = reserved for recovery partition:
+part --use-uuid --fstype ext4 --part-name recovery --fixed-size 704M
+
+# sda5 = overlay partition (it will be mounted by overlay.inc):
+part --use-uuid --fstype ext4 --part-name persistent --label persistent --fsoptions="defaults" --fixed-size 256M
+
+# sda6 = persistent app partition
+part --use-uuid --fstype ext4 --part-name application --fixed-size 5G

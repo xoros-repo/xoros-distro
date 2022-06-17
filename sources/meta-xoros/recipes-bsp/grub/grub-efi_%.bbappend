@@ -1,1 +1,1 @@
-require grub.inc
+#require grub.inc

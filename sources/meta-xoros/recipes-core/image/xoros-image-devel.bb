@@ -1,4 +1,5 @@
 require xoros-image.bb
+require overlay-devel.inc
 
 IMAGE_VERSION_SUFFIX = "-devel"
 
@@ -16,10 +17,4 @@ CORE_IMAGE_EXTRA_INSTALL += "strace procps"
 CORE_IMAGE_EXTRA_INSTALL += "openssh-sftp-server rsync nano git python3"
 
 ### Install our favorite dev tools:
-IMAGE_INSTALL += "curl git mc"
-
-### Install U-Boot tools:
-#IMAGE_INSTALL += "u-boot-tools"
-
-###
-require overlay-devel.inc
+IMAGE_INSTALL += "curl git mc apt"

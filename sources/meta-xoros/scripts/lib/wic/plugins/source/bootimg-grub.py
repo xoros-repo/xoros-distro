@@ -9,7 +9,7 @@
 #   Norbert Kamiński <norbert.kaminski (at) 3mbeb.com>
 #
 # This file is derived from bootimg-efi.py and bootimg-pcbios.py by:
-#   Tom Zanussi <tom.zanussi (at] linux.intel.com>
+#   Tom Zanussi <tom.zanussi (at) linux.intel.com>
 
 import logging
 import os
@@ -25,7 +25,7 @@ from wic.misc import (exec_cmd, exec_native_cmd,
 logger = logging.getLogger('wic')
 
 
-class BootimgGrubTbPlugin(SourcePlugin):
+class BootimgGrubPlugin(SourcePlugin):
     """
     Create partition for Grub.
     """
@@ -68,8 +68,14 @@ class BootimgGrubTbPlugin(SourcePlugin):
         dd_cmd = "dd if=%s of=%s conv=notrunc" % (mbrfile, full_path)
         exec_cmd(dd_cmd, native_sysroot)
 
+#         f = open("/tmp/demofile3.txt", "a")
+#         f.write("------------------ Now the file has more content!\n")
+#         for attr in dir(disk):
+#             f.write("disk.%s = %r\n" % (attr, getattr(disk, attr)))
+#         f.close()
+
         grub_dir = "%s/hdd/boot/grub/i386-pc" % workdir
-        cmd_bios_setup = 'grub-bios-setup -s -v -r "hd0,msdos1" -m %s -d %s %s' % (
+        cmd_bios_setup = 'grub-bios-setup -s -v -r "hd0,1" -m %s -d %s %s' % (
                           device_map_path,
                           grub_dir,
                           full_path
@@ -77,13 +83,14 @@ class BootimgGrubTbPlugin(SourcePlugin):
         exec_cmd(cmd_bios_setup, native_sysroot)
 
     @classmethod
-    def do_install_core_image(cls, grubdir ,native_sysroot):
+    def do_install_core_image(cls, grubdir, native_sysroot):
         """
         Create the core image in the grub directory.
         """
+
         grub_modules = "at_keyboard biosdisk boot chain configfile ext2 fat linux ls part_msdos reboot serial vga"
         cmd_mkimage = "grub-mkimage -p %s -d %s/i386-pc -o %s/i386-pc/core.img -O i386-pc %s" % (
-                       "(hd0,msdos1)/grub",
+                       "(hd0,boot1)/grub",
                        grubdir,
                        grubdir,
                        grub_modules)
@@ -121,7 +128,7 @@ class BootimgGrubTbPlugin(SourcePlugin):
 
             xen = "/xen"
             kernel = "/bzImage"
-            bootdev = "(hd0,msdos1)"
+            bootdev = "(hd0,boot1)"
             dom0_conf = "dom0_mem=2G loglvl=all guest_loglvl=all"
             dom0_serial = "com1=115200,8n1 console=com1 no-real-mode"
             rootdev = "/dev/sda2"
@@ -171,7 +178,7 @@ class BootimgGrubTbPlugin(SourcePlugin):
             grub_conf += "menuentry 'boot' {\n"
 
             kernel = "/bzImage"
-            bootdev = "(hd0,msdos1)"
+            bootdev = "(hd0,boot1)"
             rootdev = "/dev/sda2"
             serial = "console=ttyS0,115200 earlyprintk=serial,ttyS0,115200"
 
@@ -247,8 +254,18 @@ class BootimgGrubTbPlugin(SourcePlugin):
 
         # Copying grub modules
         grub_dir_native = get_bitbake_var("IMAGE_ROOTFS") + "/usr/lib/grub"
-        shutil.copytree("%s/i386-pc" % (grub_dir_native),
-                        "%s/grub/i386-pc" % hdddir)
+#         shutil.copytree(hdddir,
+#                         "/tmp/1/%s" % part)
+#
+#         f = open("/tmp/demofile2.txt", "a")
+#         f.write("------------------ Now the file has more content!\n")
+#         for attr in dir(part):
+#             f.write("part.%s = %r\n" % (attr, getattr(part, attr)))
+#         f.close()
+
+        if not os.path.exists("%s/grub/i386-pc/" % hdddir):
+            shutil.copytree("%s/i386-pc/" % (grub_dir_native),
+                            "%s/grub/i386-pc/" % hdddir)
 
         # Copying xen module if exists
         if os.path.exists("%s/xen.gz" % staging_kernel_dir):
@@ -285,9 +302,10 @@ class BootimgGrubTbPlugin(SourcePlugin):
 
         dosfs_cmd = "mkdosfs -n %s -i %s -C %s %d" % \
                     (label, part.fsuuid, bootimg, blocks)
-        exec_native_cmd(dosfs_cmd, native_sysroot)
+        if not os.path.exists(bootimg):
+            exec_native_cmd(dosfs_cmd, native_sysroot)
 
-        mcopy_cmd = "mcopy -i %s -s %s/* ::/" % (bootimg, hdddir)
+        mcopy_cmd = "mcopy -nv -i %s -s %s/* ::/ 2>&1" % (bootimg, hdddir)
         exec_native_cmd(mcopy_cmd, native_sysroot)
 
         chmod_cmd = "chmod 644 %s" % bootimg

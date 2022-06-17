@@ -1,21 +1,10 @@
 # https://docs.yoctoproject.org/ref-manual/kickstart.html
 
-bootloader --ptable gpt --timeout=5 --append="rw oprofile.timer=1 rootfstype=squashfs" --configfile="grub.cfg"
+bootloader --ptable msdos --timeout=5 --append="rootfstype=ext4 console=ttyS0,115200 earlyprintk=serial,ttyS0,115200"
 
-# sda1 = boot partition:
-part /boot --source bootimg-grub-tb --sourceparams="loader=grub-efi,label=boot" --ondisk sda --label boot --active --fixed-size 64M
-
-# sda2 = primary rootfs partition
-part / --source rootfs --use-uuid --fstype squashfs --part-name rootfs_a --fixed-size 1G
-
-# sda3 = secondary roots partition:
-part --source rootfs --use-uuid --fstype squashfs --part-name rootfs_b --fixed-size 1G
-
-# sda4 = reserved for recovery partition:
-part --use-uuid --fstype ext4 --part-name reserve-recovery --fixed-size 704M
-
-# sda5 = overlay partition (it will be mounted by overlay.inc):
-part --use-uuid --fstype ext4 --part-name non-volatile --label non-volatile --fsoptions="defaults" --fixed-size 256M
-
-# sda6 = persistent app partition
-part --use-uuid --fstype ext4 --part-name application --fixed-size 5G
+part /boot --source bootimg-grub --ondisk sda --label boot --active --align 1024
+part / --source rootfs --use-uuid --fstype ext4 --label rootfs_a --fsoptions="defaults,ro" --fixed-size 1G
+part --source rootfs --use-uuid --fstype ext4 --label rootfs_b --fsoptions="defaults,ro" --fixed-size 1G
+part --use-uuid --fstype ext4 --label recovery --fixed-size 704M
+part --use-uuid --fstype ext4 --label persistent --fsoptions="defaults" --fixed-size 256M
+part --use-uuid --fstype ext4 --label application --fixed-size 5G

@@ -22,7 +22,7 @@ IMAGE_FEATURES += "hwcodecs"
 IMAGE_INSTALL += "bridge-utils hostapd wpa-supplicant"
 
 ### Build wic.vmdk for QEMU
-IMAGE_FSTYPES:qemuall += "wic.vmdk wic.u-boot"
+IMAGE_FSTYPES:qemuall += "wic.vmdk"
 
 ### https://docs.yoctoproject.org/ref-manual/variables.html?highlight=image_fstypes#term-IMAGE_TYPES
 IMAGE_FSTYPES += "squashfs"
@@ -30,7 +30,7 @@ IMAGE_FSTYPES += "squashfs"
 ### Setup RAUC:
 IMAGE_INSTALL += "rauc rauc-hawkbit-updater"
 
-### Use custom WKS file:
-WKS_FILE = "${MACHINE}.wks"
+### Use EUFI WKS file:
+WKS_FILE = "${MACHINE}-efi.wks"
 
 
