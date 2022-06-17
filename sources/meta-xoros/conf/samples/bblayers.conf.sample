@@ -1,14 +1,16 @@
+DISTRO_ROOT_DIR = "${@os.path.abspath(os.path.join("${TOPDIR}", os.pardir))}/xoros-distro"
+
 BBLAYERS ?= " \
-  ${TOPDIR}/../sources/poky/meta \
-  ${TOPDIR}/../sources/poky/meta-poky \
-  ${TOPDIR}/../sources/poky/meta-yocto-bsp \
-  ${TOPDIR}/../sources/meta-python2 \
-  ${TOPDIR}/../sources/meta-clang \
-  ${TOPDIR}/../sources/meta-openembedded/meta-oe \
-  ${TOPDIR}/../sources/meta-openembedded/meta-multimedia \
-  ${TOPDIR}/../sources/meta-openembedded/meta-networking \
-  ${TOPDIR}/../sources/meta-openembedded/meta-python \
-  ${TOPDIR}/../sources/meta-browser/meta-chromium \
-  ${TOPDIR}/../sources/meta-rauc \
-  ${TOPDIR}/../sources/meta-xoros \
+  ${DISTRO_ROOT_DIR}/sources/poky/meta \
+  ${DISTRO_ROOT_DIR}/sources/poky/meta-poky \
+  ${DISTRO_ROOT_DIR}/sources/poky/meta-yocto-bsp \
+  ${DISTRO_ROOT_DIR}/sources/meta-python2 \
+  ${DISTRO_ROOT_DIR}/sources/meta-clang \
+  ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-oe \
+  ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-multimedia \
+  ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-networking \
+  ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-python \
+  ${DISTRO_ROOT_DIR}/sources/meta-browser/meta-chromium \
+  ${DISTRO_ROOT_DIR}/sources/meta-rauc \
+  ${DISTRO_ROOT_DIR}/sources/meta-xoros \
 "

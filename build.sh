@@ -39,7 +39,9 @@ XOROS_IMAGETYPE=wic.gz
 
 export TEMPLATECONF=${XOROS_META_DIR}/conf/samples
 
-source "${XOROS_PWD}"/sources/poky/oe-init-build-env
+oe_init_cmd="source ${XOROS_PWD}/sources/poky/oe-init-build-env ${BUILDER_BUILD_DIR}"
+echo "RUN: $oe_init_cmd"
+$oe_init_cmd
 
 echo "BBPATH=${BBPATH}"
 
@@ -55,6 +57,11 @@ else
   mkdir -p "${BB_DL_DIR}"
   echo "DL_DIR ?= \"${BB_DL_DIR}\"" >> "${BBPATH}"/conf/local.conf
 fi
+
+if [ -z ${BUILDER_BUILD_DIR+x} ]; then
+  echo "BUILDER_BUILD_DIR is not set"
+fi
+
 
 cd "${BBPATH}" || exit 1
 
