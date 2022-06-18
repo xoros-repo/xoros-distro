@@ -1,0 +1,7 @@
+{
+    "name": "xoros-distro",
+    "scripts":{
+        "build_locally":"./build.sh",
+        "build_remote":"./build_remote.sh"
+    }
+}
