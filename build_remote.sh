@@ -14,7 +14,7 @@ build_command="\
   && cd ${remote_root_dir}/xoros-distro \
   && export BUILDER_BUILD_DIR=${build_dir} \
   && export BUILDER_CACHE_DIR=${cache_dir} \
-  && ./build.sh
+  && ./build.sh \
 "
 
 ssh ${REMOTE_USER}@${REMOTE_HOST} "\
@@ -22,7 +22,8 @@ ssh ${REMOTE_USER}@${REMOTE_HOST} "\
   virsh shutdown $vm; \
   virsh destroy $vm; \
   virsh undefine --nvram $vm; \
-  virsh undefine $vm"
+  virsh undefine $vm \
+"
 
 rsync -azh --stats --delete --exclude=".gitignore" --exclude-from=".gitignore" \
   . \
@@ -48,7 +49,8 @@ qemu_command="echo 'Starting QEMU with UEFI...' \
     --os-variant=generic \
     --force \
     --noautoconsole \
-    --disk \$DISK_FILE"
+    --disk \$DISK_FILE \
+"
 
 ssh ${REMOTE_USER}@${REMOTE_HOST} "$build_command"
 

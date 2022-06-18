@@ -17,4 +17,5 @@ CORE_IMAGE_EXTRA_INSTALL += "strace procps"
 CORE_IMAGE_EXTRA_INSTALL += "openssh-sftp-server rsync nano git python3"
 
 ### Install our favorite dev tools:
-IMAGE_INSTALL += "curl git mc apt"
+IMAGE_INSTALL += "curl git mc"
+

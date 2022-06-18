@@ -1,9 +1,9 @@
 # https://docs.yoctoproject.org/ref-manual/kickstart.html
 
-bootloader --ptable gpt --timeout=5 --append="rw oprofile.timer=1 rootfstype=squashfs"
+bootloader --ptable gpt --timeout=5 --append="oprofile.timer=1" --configfile="grub_rauc.cfg"
 
 # sda1 = boot partition:
-part /boot --source bootimg-efi --ondisk sda --rootfs-dir=${IMAGE_ROOTFS}/boot --sourceparams="loader=grub-efi" --active --fixed-size 64M
+part /boot --source bootimg-efi-grubenv --ondisk sda --rootfs-dir=${IMAGE_ROOTFS}/boot --sourceparams="loader=grub-efi" --active --fixed-size 64M
 
 # sda2 = primary rootfs partition
 part / --source rootfs --use-uuid --fstype squashfs --part-name rootfs_a --fixed-size 1G
@@ -11,8 +11,8 @@ part / --source rootfs --use-uuid --fstype squashfs --part-name rootfs_a --fixed
 # sda3 = secondary roots partition:
 part --source rootfs --use-uuid --fstype squashfs --part-name rootfs_b --fixed-size 1G
 
-# sda4 = reserved for recovery partition:
-part --use-uuid --fstype ext4 --part-name recovery --fixed-size 704M
+# sda4 = reserved for rescue partition:
+part --use-uuid --fstype ext4 --part-name rescue --fixed-size 704M
 
 # sda5 = overlay partition (it will be mounted by overlay.inc):
 part --use-uuid --fstype ext4 --part-name persistent --label persistent --fsoptions="defaults" --fixed-size 256M

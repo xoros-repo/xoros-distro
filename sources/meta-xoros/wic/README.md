@@ -12,7 +12,7 @@
 | boot        | /boot       | 64M  | boot        | _**ref**: Bootloader Source_ | vfat       |     |
 | rootfs_a    | /           | 1G   | rootfs_a    | rootfs                       | squashfs   |     |
 | rootfs_b    |             | 1G   | rootfs_b    | rootfs                       | squashfs   |     |
-| recovery    |             | 704M | recovery    |                              | ext4       |     |
+| rescue      |             | 704M | rescue      |                              | ext4       |     |
 | persistent  | /persistent | 256M | persistent  |                              | ext4       |     |
 | application | /opt        | 5G   | application |                              | ext4       |     |
 
@@ -66,3 +66,7 @@ part --source bootimg-grub
 https://docs.yoctoproject.org/ref-manual/kickstart.html
 
 Running UEFI-based image in QEMU requires obtaining UEFI firmware and NVRAM templates, please see main README how to do that.
+
+### Rauc
+
+https://github.com/rauc/rauc/blob/master/contrib/grub.conf

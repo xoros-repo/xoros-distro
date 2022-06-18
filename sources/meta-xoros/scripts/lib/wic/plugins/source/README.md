@@ -1,3 +1,12 @@
+# Description
+
+## bootimg-efi-grubenv.py
+
+This is a modified version of bootimg-efi.py
+
+It adds automatic creation and deployment of `grubenv` used by GRUB to store env variables. 
+Storing env variables is required by GRUB menu script within Rauc A/B booting feature.
+
 # WKS Python Object Reference
 
 ## Partition Object Properties

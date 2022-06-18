@@ -7,8 +7,6 @@ LICENSE = "CLOSED"
 
 IMAGE_VERSION_SUFFIX = "-release"
 
-ROOT_HOME = "/root"
-
 ### Need this, or get "No such file or directory: 'cross-localedef'"
 DEPENDS += "cross-localedef-native"
 
