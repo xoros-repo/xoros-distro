@@ -1,0 +1,10 @@
+# https://docs.yoctoproject.org/ref-manual/kickstart.html
+
+bootloader --ptable msdos --timeout=5 --append="rootfstype=ext4 console=ttyS0,115200 earlyprintk=serial,ttyS0,115200"
+
+part /boot --source bootimg-grub --ondisk sda --label boot --active --align 1024
+part / --source rootfs --use-uuid --fstype ext4 --label rootfs_a --fsoptions="defaults,ro" --fixed-size 1G
+part --source rootfs --use-uuid --fstype ext4 --label rootfs_b --fsoptions="defaults,ro" --fixed-size 1G
+part --use-uuid --fstype ext4 --label rescue --fixed-size 704M
+part --use-uuid --fstype ext4 --label persistent --fsoptions="defaults" --fixed-size 256M
+part --use-uuid --fstype ext4 --label application --fixed-size 5G

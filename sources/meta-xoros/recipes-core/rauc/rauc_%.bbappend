@@ -1,20 +1,21 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
 SRC_URI += "  \
 	file://system.conf \
 	file://ca.cert.pem \
-	file://rauc-grow-data-partition.service \
 "
 
 inherit systemd
 
-SYSTEMD_PACKAGES += "${PN}-grow-data-part"
-SYSTEMD_SERVICE_${PN}-grow-data-part = "rauc-grow-data-partition.service"
+# RDEPENDS_${PN}-grow-data-part += "parted"
 
-PACKAGES += "rauc-grow-data-part"
+#do_install:append() {
+#	install -d ${D}${systemd_unitdir}/system/
+#	install -m 0644 ${WORKDIR}/partition-grow.service ${D}${systemd_unitdir}/system/
+#}
 
-RDEPENDS_${PN}-grow-data-part += "parted"
-
-do_install:append() {
-	install -d ${D}${systemd_unitdir}/system/
-	install -m 0644 ${WORKDIR}/rauc-grow-data-partition.service ${D}${systemd_unitdir}/system/
-}
+# do_install:append() {
+# 	INST_LOC=${IMAGE_ROOTFS}/boot
+# 	install -d ${INST_LOC}/grub
+# 	install -m 0644 ${WORKDIR}/grub_rauc.cfg ${INST_LOC}/grub/grub.cfg
+# }
