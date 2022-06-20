@@ -3,5 +3,4 @@
 
 ### Except xoros related files and dirs
 !meta-xoros
-!meta-xoros/**
 !fetch_sources.sh
