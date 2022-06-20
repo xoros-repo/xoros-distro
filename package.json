@@ -1,7 +1,76 @@
 {
     "name": "xoros-distro",
-    "scripts":{
-        "build_locally":"./build.sh",
-        "build_remote":"./build_remote.sh"
+    "version": "0.0.1",
+    "description": "",
+    "scripts": {
+        "build_locally": "./build.sh",
+        "build_remote": "./build_remote.sh",
+        "sources": "node sources.js"
+    },
+    "dependencies": {
+        "node-reposync": "^0.0.5"
+    },
+    "reposDir": "sources",
+    "repos": {
+        "poky": {
+            "url": "git://git.yoctoproject.org/poky",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-openembedded": {
+            "url": "https://github.com/openembedded/meta-openembedded.git",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "openembedded-core": {
+            "url": "git://git.openembedded.org/openembedded-core",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-security": {
+            "url": "git://git.yoctoproject.org/meta-security",
+            "branch": "master",
+            "depth": 1
+        },
+        "meta-python2": {
+            "url": "git://git.openembedded.org/meta-python2",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-clang": {
+            "url": "https://github.com/kraj/meta-clang.git",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-rauc": {
+            "url": "https://github.com/rauc/meta-rauc.git",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-raspberrypi": {
+            "url": "git://git.yoctoproject.org/meta-raspberrypi",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-freescale": {
+            "url": "git://git.yoctoproject.org/meta-freescale",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-freescale-3rdparty": {
+            "url": "https://github.com/Freescale/meta-freescale-3rdparty.git",
+            "branch": "kirkstone",
+            "depth": 1
+        },
+        "meta-variscite-fslc": {
+            "url": "https://github.com/varigit/meta-variscite-fslc.git",
+            "branch": "hardknott",
+            "depth": 1
+        },
+        "meta-webkit": {
+            "url": "https://github.com/Igalia/meta-webkit.git",
+            "branch": "main",
+            "depth": 1
+        }
     }
 }

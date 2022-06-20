@@ -1,5 +1,10 @@
 DISTRO_ROOT_DIR = "${@os.path.abspath(os.path.join("${TOPDIR}", os.pardir))}/xoros-distro"
 
+WEBKIT_LAYERS = " \
+  ${DISTRO_ROOT_DIR}/sources/meta-webkit \
+  ${DISTRO_ROOT_DIR}/sources/meta-security \
+"
+
 BBLAYERS ?= " \
   ${DISTRO_ROOT_DIR}/sources/poky/meta \
   ${DISTRO_ROOT_DIR}/sources/poky/meta-poky \
@@ -10,7 +15,7 @@ BBLAYERS ?= " \
   ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-multimedia \
   ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-networking \
   ${DISTRO_ROOT_DIR}/sources/meta-openembedded/meta-python \
-  ${DISTRO_ROOT_DIR}/sources/meta-browser/meta-chromium \
   ${DISTRO_ROOT_DIR}/sources/meta-rauc \
   ${DISTRO_ROOT_DIR}/sources/meta-xoros \
+  ${WEBKIT_LAYERS} \
 "

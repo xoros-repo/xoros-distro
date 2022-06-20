@@ -17,7 +17,7 @@ require bootloader.inc
 IMAGE_FEATURES += "hwcodecs"
 
 ### Install networking tools
-IMAGE_INSTALL += "bridge-utils hostapd wpa-supplicant"
+IMAGE_INSTALL += "bridge-utils hostapd wpa-supplicant cog"
 
 ### Build wic.vmdk for QEMU
 IMAGE_FSTYPES:qemuall += "wic.vmdk"
